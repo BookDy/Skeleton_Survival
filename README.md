@@ -132,18 +132,53 @@
     <br />
     <br />
   - #### 적 FSM(상태 머신)
+
+    <img src="Image_Source/FSM.png" width="200" heigh="200">
+    <br />
+    적의 행동은 상태 머신으로 구현하였습니다.
+    <br />
+    EEnemyState라는 열거형 변수를 만들어 EnemyFSM 액터 컴포넌트에서 프레임마다 현재 EEnemyState의 값을 확인하면서 적의 행동이 변합니다.
+
     
     -기본 상태
     <br />
+    <img src="Image_Source/스켈레톤 Idle.gif" width="200" height="200">
+    <br />
+    스켈레톤이 스폰된 후 일정시간 동안 Idle 상태에 머뭅니다. 그 후 Move 상태로 전환됩니다.
+
+    
     -이동 상태
     <br />
+    <img src="Image_Source/스켈레톤 Move.gif" width="200" height="200">
+    <br />
+    스켈레톤이 플레이어를 향해 이동합니다. 플레이어가 공격 범위 안에 들어오면 Attack 상태로 전환됩니다.
+
+    
     -공격 상태
     <br />
+    <img src="Image_Source/스켈레톤 Attack.gif" width="200" height="200">
+    <br />
+    스켈레톤이 플레이어를 향해 공격합니다. 팔을 뻗는 동작에 Anim_Notify가 발생하고 이 시점에 공격이 플레이어에게 닿았다면 플레이어에게 데미지를 줍니다.
+    <br />
+    플레이어가 그대로 공격범위 안에 있으면 공격을 다시하고, 공격범위에서 벗어났다면 Move 상태로 돌아갑니다.
+
+    
     -피격 상태
     <br />
+    <img src="Image_Source/스켈레톤 Damage.gif" width="200" height="200">
+    <br />
+    스켈레톤의 Damage 상태입니다. 플레이어의 총알이 스켈레톤에 닿으면 EEnemyState를 Damage로 바꾸어 상태를 Damage로 바꿉니다.
+    <br />
+    Damage 애니메이션이 끝나면 Anim_Notify가 발생하고 EenemyState를 Idle로 바꿉니다.
+
+    
     -죽음 상태
     <br />
+    <img src="Image_Source/스켈레톤 Die.gif" width="200" height="200">
     <br />
+    Damage를 체크할 때 체력이 0이하가 된다면 죽음 상태가 됩니다.
+    <br />
+    죽음과 동시에 플레이어에게 경험치를 주고 죽는 애니메이션이 끝나면 객체를 Destroy하고 UI에 표시되는 현재 남아있는 스켈레톤 수를 1 줄입니다.
 
 # 3. 플레이 영상
 [플레이 영상](https://youtu.be/5UMjmZaq4GM)
